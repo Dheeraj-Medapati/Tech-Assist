@@ -1,0 +1,112 @@
+/* Chat wrapper */
+.chat-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #0f0f1a;
+  }
+  
+  /* Chat container */
+  .chat-container {
+    width: 400px;
+    background: #1e1e2e;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+  }
+  
+  /* Chat box (dynamically resizable) */
+  .chat-box {
+    min-height: 100px; /* Start small */
+    max-height: 400px; /* Max limit */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
+    background-color: #12121c;
+    border-radius: 10px;
+  }
+  
+  /* Messages */
+  .message {
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 5px 0;
+    max-width: 70%;
+    word-wrap: break-word;
+  }
+  
+  /* User messages */
+  .message.user {
+    background-color: #4a90e2;
+    color: white;
+    align-self: flex-end;
+  }
+  
+  /* Bot messages */
+  .message.bot {
+    background-color: #3c3c46;
+    color: white;
+    align-self: flex-start;
+  }
+  
+  /* Image messages */
+  .chat-image {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 8px;
+    margin-top: 5px;
+  }
+  
+  /* Input box */
+  .input-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  /* Chat input */
+  .chat-input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: #2e2e3e;
+    color: white;
+  }
+  
+  /* Send button */
+  .send-button {
+    background-color: #4a90e2;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+  }
+  
+  /* Image upload button */
+  .icon-button {
+    background-color: #2e2e3e;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+  
+  /* Footer */
+  .pon {
+    color: white;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
