@@ -1,4 +1,3 @@
-// app.jsx (React - Frontend)
 import { useState, useEffect, useRef } from "react";
 import { Send, Image as ImageIcon } from "lucide-react";
 import "./style.css"; // Import CSS file
@@ -9,27 +8,23 @@ function App() {
   ]);
   const [input, setInput] = useState("");
   const chatBoxRef = useRef(null);
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
 
     setMessages((prev) => [...prev, { text: input, sender: "user" }]);
     setInput("");
-    setLoading(true); // Start loading
+    setLoading(true);
 
     try {
-      const response = await fetch("/api/gemini", {
+      const response = await fetch("http://localhost:3001/api/gemini", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: input }),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
       const data = await response.json();
       const reply = data.reply || "Sorry, I couldn't process that.";
@@ -37,12 +32,9 @@ function App() {
       setMessages((prev) => [...prev, { text: reply, sender: "bot" }]);
     } catch (error) {
       console.error("API error:", error);
-      setMessages((prev) => [
-        ...prev,
-        { text: "Error: Unable to fetch response.", sender: "bot" },
-      ]);
+      setMessages((prev) => [...prev, { text: "Error: Unable to fetch response.", sender: "bot" }]);
     } finally {
-      setLoading(false); // Stop loading regardless of success or failure
+      setLoading(false);
     }
   };
 
@@ -50,42 +42,31 @@ function App() {
     const file = event.target.files[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      setMessages((prev) => [...prev, { image: e.target.result, sender: "user" }]);
-      setLoading(true);
+    setMessages((prev) => [...prev, { image: URL.createObjectURL(file), sender: "user" }]);
+    setLoading(true);
 
-      try {
-        const formData = new FormData();
-        formData.append('image', file);
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
 
-        const response = await fetch('/api/gemini/image', {
-          method: 'POST',
-          body: formData,
-        });
+      const response = await fetch("http://localhost:3001/api/gemini/image", { method: "POST", body: formData });
 
-        if(!response.ok){
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-        const data = await response.json();
-        const reply = data.reply || "Sorry, I couldn't process the image.";
+      const data = await response.json();
+      const reply = data.reply || "Sorry, I couldn't process the image.";
 
-        setMessages((prev) => [...prev, {text: reply, sender: 'bot'}]);
-      } catch (error){
-        console.error('Image processing error:', error);
-        setMessages((prev) => [...prev, {text: 'Error processing image', sender: 'bot'}]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    reader.readAsDataURL(file);
+      setMessages((prev) => [...prev, { text: reply, sender: "bot" }]);
+    } catch (error) {
+      console.error("Image processing error:", error);
+      setMessages((prev) => [...prev, { text: "Error processing image", sender: "bot" }]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    chatBoxRef.current?.lastElementChild?.scrollIntoView({
-      behavior: "smooth",
-    });
+    chatBoxRef.current?.lastElementChild?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   return (
@@ -95,21 +76,13 @@ function App() {
           {messages.map((msg, index) => (
             <div key={index} className={`message ${msg.sender}`}>
               {msg.text && <p>{msg.text}</p>}
-              {msg.image && (
-                <img src={msg.image} alt="Uploaded" className="chat-image" />
-              )}
+              {msg.image && <img src={msg.image} alt="Uploaded" className="chat-image" />}
             </div>
           ))}
           {loading && <div className="message bot">Loading...</div>}
         </div>
         <div className="input-box">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={sendImage}
-            style={{ display: "none" }}
-            id="image-upload"
-          />
+          <input type="file" accept="image/*" onChange={sendImage} style={{ display: "none" }} id="image-upload" />
           <label htmlFor="image-upload" className="icon-button">
             <ImageIcon size={20} />
           </label>
