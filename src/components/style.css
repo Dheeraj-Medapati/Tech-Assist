@@ -1,0 +1,134 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0d0d16; /* Dark theme */
+  color: white;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Chat wrapper now covers the whole page */
+.chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Chat box now grows to fill available space */
+.chat-container {
+  width: 50%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  transform: translateX(+50%);
+}
+
+/* Messages scroll naturally */
+.chat-box {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding-bottom: 10px;
+  
+}
+
+/* Messages */
+.message {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  word-wrap: break-word;
+  font-size: 14px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* User & Bot message styles */
+.message.user {
+  background-color: #1e90ff;
+  align-self: flex-end;
+}
+
+.message.bot {
+  background-color: #333;
+  align-self: flex-start;
+}
+
+/* Image messages */
+.chat-image {
+  max-width: 200px;
+  border-radius: 10px;
+  
+  
+}
+
+/* Input bar is always at the bottom */
+.input-box {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: #12122b;
+  border-radius: 10px;
+}
+
+/* Chat input takes the full width */
+.chat-input {
+  flex-grow: 1;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #2e2e3e;
+  color: white;
+  font-size: 14px;
+}
+
+/* Buttons */
+.send-button{
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  margin-left: 10px;
+}
+
+.icon-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  margin-right: 10px; /* Moves the icon left */
+  margin-left: 5px; /* Adjust as needed */
+}
+
+
+.pon {
+  text-align: center;
+  padding: 5px;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+/* Smooth fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
